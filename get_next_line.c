@@ -6,7 +6,7 @@
 /*   By: ocviller <ocviller@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:16:56 by ocviller          #+#    #+#             */
-/*   Updated: 2025/05/18 16:40:43 by ocviller         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:56:48 by ocviller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*fill_line_buffer(int fd, char *stash, char *buffer)
 {
-	int		bytes_read;
+	ssize_t	bytes_read;
 	char	*temp;
 
 	if (!stash)
@@ -23,17 +23,16 @@ char	*fill_line_buffer(int fd, char *stash, char *buffer)
 	while (bytes_read > 0 && !ft_strchr(stash, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read <= 0)
-			break ;
+		if (bytes_read < 0)
+			return (free(stash), NULL);
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(stash, buffer);
+		if (!temp)
+			return (NULL);
 		free(stash);
 		stash = temp;
-	}
-	if (bytes_read < 0)
-	{
-		free(stash);
-		return (NULL);
+		if (!stash)
+			return (NULL);
 	}
 	return (stash);
 }
@@ -41,7 +40,7 @@ char	*fill_line_buffer(int fd, char *stash, char *buffer)
 char	*set_line(char *line)
 {
 	int		i;
-	char	*stash;
+	char	*tmp;
 
 	i = 0;
 	if (!line)
@@ -53,14 +52,14 @@ char	*set_line(char *line)
 		line[i] = '\0';
 		return (NULL);
 	}
-	stash = ft_substr(line, i + 1, ft_strlen(line) - i);
-	if (!stash || stash[0] == '\0')
+	tmp = ft_substr(line, i + 1, ft_strlen(line) - i);
+	if (!tmp || tmp[0] == '\0')
 	{
-		free(stash);
+		free(tmp);
 		return (NULL);
 	}
 	line[i + 1] = '\0';
-	return (stash);
+	return (tmp);
 }
 
 char	*get_next_line(int fd)
@@ -79,22 +78,23 @@ char	*get_next_line(int fd)
 	if (!line || line[0] == '\0')
 	{
 		free(line);
+		stash = NULL;
 		return (NULL);
 	}
 	stash = set_line(line);
 	return (line);
 }
 
-int main()
-{
-	int fd;
-	char *line;
+// int main()
+// {
+// 	int fd;
+// 	char *line;
 
-	fd = open("empty.txt", O_RDONLY);
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-}
+// 	fd = open("empty.txt", O_RDONLY);
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("%s", line);
+// 		free(line);
+// 	}
+// 	close(fd);
+//  }
