@@ -6,7 +6,7 @@
 /*   By: ocviller <ocviller@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:16:56 by ocviller          #+#    #+#             */
-/*   Updated: 2025/05/19 16:56:48 by ocviller         ###   ########.fr       */
+/*   Updated: 2025/05/22 14:47:39 by ocviller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,6 @@ char	*set_line(char *line)
 		return (NULL);
 	while (line[i] != '\0' && line[i] != '\n')
 		i++;
-	if (line[i] == '\0')
-	{
-		line[i] = '\0';
-		return (NULL);
-	}
 	tmp = ft_substr(line, i + 1, ft_strlen(line) - i);
 	if (!tmp || tmp[0] == '\0')
 	{
