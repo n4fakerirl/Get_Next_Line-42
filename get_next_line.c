@@ -6,7 +6,7 @@
 /*   By: ocviller <ocviller@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 20:16:56 by ocviller          #+#    #+#             */
-/*   Updated: 2025/06/04 10:57:54 by ocviller         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:29:16 by ocviller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*fill_line_buffer(int fd, char *stash, char *buffer)
 
 	if (!stash)
 		stash = ft_strdup("");
+	if (!stash)
+		return (NULL);
 	bytes_read = 1;
 	while (bytes_read > 0 && !ft_strchr(stash, '\n'))
 	{
@@ -79,21 +81,3 @@ char	*get_next_line(int fd)
 	stash = set_line(line);
 	return (line);
 }
-
-// int main()
-// {
-// 	int fd;
-// 	int fd2;
-// 	int fd3;
-// 	char *line;
-
-// 	fd = open("test1.txt", O_RDONLY);
-// 	fd2 = open("test2.txt", O_RDONLY);
-// 	fd3 = open("test3.txt", O_RDONLY);
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// 	close(fd);
-//  }

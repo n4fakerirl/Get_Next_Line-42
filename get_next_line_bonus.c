@@ -6,7 +6,7 @@
 /*   By: ocviller <ocviller@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 10:36:23 by ocviller          #+#    #+#             */
-/*   Updated: 2025/06/04 11:21:58 by ocviller         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:25:17 by ocviller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*fill_line_buffer(int fd, char *stash, char *buffer)
 
 	if (!stash)
 		stash = ft_strdup("");
+	if (!stash)
+		return (NULL);
 	bytes_read = 1;
 	while (bytes_read > 0 && !ft_strchr(stash, '\n'))
 	{
@@ -79,60 +81,3 @@ char	*get_next_line(int fd)
 	stash[fd] = set_line(line);
 	return (line);
 }
-
-// int    main(void)
-// {
-//     char    *res;
-//     int    fd1;
-//     int    fd2;
-
-//     fd1 = open("test1.txt", O_RDONLY);
-//     fd2 = open("test2.txt", O_RDONLY);
-
-//     res = get_next_line(fd2);
-//     if (res)
-//     {
-//         printf("%s", res);
-//         free(res);
-//     }
-//     res = get_next_line(fd2);
-//     if (res)
-//     {
-//         printf("%s", res);
-//         free(res);
-//     }
-//     res = get_next_line(fd1);
-//     if (res)
-//     {
-//         printf("%s", res);
-//         free(res);
-//     }
-//     res = get_next_line(fd1);
-//     if (res)
-//     {
-//         printf("%s", res);
-//         free(res);
-//     }
-//     res = get_next_line(fd1);
-//     if (res)
-//     {
-//         printf("%s", res);
-//         free(res);
-//     }
-//     res = get_next_line(fd1);
-//     if (res)
-//     {
-//         printf("%s", res);
-//         free(res);
-//     }
-//     res = get_next_line(fd1);
-//     if (res)
-//     {
-//         printf("%s", res);
-//         free(res);
-//     }
-
-//     close(fd1);
-//     close(fd2);
-//     return (0);
-// }
