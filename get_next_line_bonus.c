@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocviller <ocviller@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 20:16:56 by ocviller          #+#    #+#             */
-/*   Updated: 2025/06/04 10:57:54 by ocviller         ###   ########.fr       */
+/*   Created: 2025/06/04 10:36:23 by ocviller          #+#    #+#             */
+/*   Updated: 2025/06/04 11:21:58 by ocviller         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*fill_line_buffer(int fd, char *stash, char *buffer)
 {
@@ -60,40 +60,79 @@ char	*set_line(char *line)
 char	*get_next_line(int fd)
 {
 	char		*buffer;
-	static char	*stash;
+	static char	*stash[1024];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > 1023 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	line = fill_line_buffer(fd, stash, buffer);
+	line = fill_line_buffer(fd, stash[fd], buffer);
 	free(buffer);
 	if (!line || line[0] == '\0')
 	{
 		free(line);
-		stash = NULL;
+		stash[fd] = NULL;
 		return (NULL);
 	}
-	stash = set_line(line);
+	stash[fd] = set_line(line);
 	return (line);
 }
 
-// int main()
+// int    main(void)
 // {
-// 	int fd;
-// 	int fd2;
-// 	int fd3;
-// 	char *line;
+//     char    *res;
+//     int    fd1;
+//     int    fd2;
 
-// 	fd = open("test1.txt", O_RDONLY);
-// 	fd2 = open("test2.txt", O_RDONLY);
-// 	fd3 = open("test3.txt", O_RDONLY);
-// 	while ((line = get_next_line(fd)) != NULL)
-// 	{
-// 		printf("%s", line);
-// 		free(line);
-// 	}
-// 	close(fd);
-//  }
+//     fd1 = open("test1.txt", O_RDONLY);
+//     fd2 = open("test2.txt", O_RDONLY);
+
+//     res = get_next_line(fd2);
+//     if (res)
+//     {
+//         printf("%s", res);
+//         free(res);
+//     }
+//     res = get_next_line(fd2);
+//     if (res)
+//     {
+//         printf("%s", res);
+//         free(res);
+//     }
+//     res = get_next_line(fd1);
+//     if (res)
+//     {
+//         printf("%s", res);
+//         free(res);
+//     }
+//     res = get_next_line(fd1);
+//     if (res)
+//     {
+//         printf("%s", res);
+//         free(res);
+//     }
+//     res = get_next_line(fd1);
+//     if (res)
+//     {
+//         printf("%s", res);
+//         free(res);
+//     }
+//     res = get_next_line(fd1);
+//     if (res)
+//     {
+//         printf("%s", res);
+//         free(res);
+//     }
+//     res = get_next_line(fd1);
+//     if (res)
+//     {
+//         printf("%s", res);
+//         free(res);
+//     }
+
+//     close(fd1);
+//     close(fd2);
+//     return (0);
+// }
